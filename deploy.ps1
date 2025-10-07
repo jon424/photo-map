@@ -24,9 +24,18 @@ try {
 $SUBSCRIPTION_ID = az account show --query id -o tsv
 Write-Host "Using Azure subscription: $SUBSCRIPTION_ID" -ForegroundColor Cyan
 
+# Load environment variables from .env file if it exists
+if (Test-Path ".env") {
+    Get-Content ".env" | ForEach-Object {
+        if ($_ -match "^([^#][^=]+)=(.*)$") {
+            [Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
+        }
+    }
+}
+
 # Use existing storage account
-$STORAGE_ACCOUNT = "stphotomap2t70yg7v"
-$RESOURCE_GROUP = "rg-photo-map-2t70yg7v"
+$STORAGE_ACCOUNT = if ($env:STORAGE_ACCOUNT_NAME) { $env:STORAGE_ACCOUNT_NAME } else { "stphotomap2t70yg7v" }
+$RESOURCE_GROUP = if ($env:RESOURCE_GROUP_NAME) { $env:RESOURCE_GROUP_NAME } else { "rg-photo-map-2t70yg7v" }
 
 Write-Host "Using existing storage account: $STORAGE_ACCOUNT" -ForegroundColor Yellow
 
