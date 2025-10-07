@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Map - Take Photos & See Them on the Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📸 Photo Map</h1>
+            <p>Take photos and see them on the global map!</p>
+        </header>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button id="locateBtn" class="btn btn-primary">
+                        📍 Locate Me
+                    </button>
+                    <button id="takePhotoBtn" class="btn btn-success">
+                        📷 Take Photo
+                    </button>
+                </div>
+            </div>
+
+            <div class="photo-panel">
+                <div class="photo-form">
+                    <h3>📸 Take a New Photo</h3>
+                    
+                    <div class="camera-container">
+                        <video id="camera" autoplay playsinline></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <img id="preview" style="display: none;" alt="Photo preview">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description (optional):</label>
+                        <textarea id="description" placeholder="Describe your photo..."></textarea>
+                    </div>
+
+                    <div class="location-info">
+                        <p>📍 Location: <span id="locationText">Getting location...</span></p>
+                        <p>📅 Time: <span id="timeText">-</span></p>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="captureBtn" class="btn btn-primary" disabled>
+                            📸 Capture Photo
+                        </button>
+                        <button id="uploadBtn" class="btn btn-success" disabled>
+                            ⬆️ Upload Photo
+                        </button>
+                        <button id="retakeBtn" class="btn btn-secondary" style="display: none;">
+                            🔄 Retake
+                        </button>
+                    </div>
+                </div>
+
+                <div class="photos-list">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>📸 Recent Photos</h3>
+                        <button id="clearAllBtn" class="btn btn-danger btn-sm" style="display: none;">
+                            🗑️ Clear All
+                        </button>
+                    </div>
+                    <div id="photosList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Photo modal -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImage" src="" alt="Photo">
+            <div class="modal-info">
+                <p id="modalLocation"></p>
+                <p id="modalTime"></p>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
